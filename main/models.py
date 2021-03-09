@@ -14,18 +14,19 @@ TYPES = [
 
 
 class Premises(models.Model):
+    COUNTRIES_FIRST = ['PL']
     name = models.CharField(max_length=256)
     address = models.CharField("Adres", max_length=1024)
     zip_code = models.CharField("Kod pocztowy", max_length=12)
     city = models.CharField("Miejscowość", max_length=1024)
-    country = CountryField(COUNTRIES_FIRST='PL')
+    country = CountryField()
     type = models.CharField(max_length=32, choices=TYPES)
 
 
 class Room(models.Model):
     people_number = models.IntegerField()
     capacity = models.FloatField(null=True, blank=True)
-    premises = models.ForeignKey(Premises)
+    premises = models.ForeignKey(Premises, related_name='premises', on_delete=models.CASCADE)
 
 
 class Feature(models.Model):
