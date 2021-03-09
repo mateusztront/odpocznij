@@ -1,0 +1,12 @@
+{{ premises.name }}
+{{ premises.address }}
+{{ premises.city }}
+{{ premises.type }}
+{{ premises.zip_code }}
+<br>{{ premises.description }}
+<br>{% for room in premises.rooms.all %}
+    <br>{{ room.people_number }}
+        {% for feature in room.feature_set.all %}
+            <br>{{ feature.name }}
+            {% endfor %}
+    {% endfor %}

@@ -1,1 +1,8 @@
-{{ results }}
+
+{% for result in results %}
+    {{ result.type }} <a href="{% url 'premises' result.id %}">{{ result.name }}</a>
+    <br>
+    {{ result.address }}
+    {{ result.city }}
+    <br>{{ result.description }}
+{% endfor %}

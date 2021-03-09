@@ -21,14 +21,21 @@ class Premises(models.Model):
     city = models.CharField("Miejscowość", max_length=1024)
     country = CountryField()
     type = models.CharField(max_length=32, choices=TYPES)
+    description = models.TextField()
+    #dodac model Reviews z relacją do premises
+    def __str__(self):
+        return self.name
 
 
 class Room(models.Model):
     people_number = models.IntegerField()
     capacity = models.FloatField(null=True, blank=True)
-    premises = models.ForeignKey(Premises, related_name='premises', on_delete=models.CASCADE)
+    premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
 
 
 class Feature(models.Model):
     name = models.CharField(max_length=256)
-    room = models.ManyToManyField(Room)
+    rooms = models.ManyToManyField(Room)
+
+    def __str__(self):
+        return self.name
