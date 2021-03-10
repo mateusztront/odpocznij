@@ -18,4 +18,5 @@ class MainView(View):
 class PremisesView(View):
     def get(self, request, id):
         premises = Premises.objects.get(pk=id)
-        return render(request, "premises_view.html", {"premises": premises})
+        room_types = premises.rooms.order_by('people_number')
+        return render(request, "premises_view.html", {"premises": premises, "room_types": room_types})

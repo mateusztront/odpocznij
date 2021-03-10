@@ -4,9 +4,17 @@
 {{ premises.type }}
 {{ premises.zip_code }}
 <br>{{ premises.description }}
-<br>{% for room in premises.rooms.all %}
-    <br>{{ room.people_number }}
-        {% for feature in room.feature_set.all %}
+{% regroup room_types by people_number as room_types_unique %}
+<table>
+{% for room in room_types_unique %}
+    <tr><th>Liczba osób w pokoju: {{ room.grouper }}</th>
+        <th>
+    {% for feature in room.list.0.feature_set.all %}
+{#            biorę tylko pierwszy pokoj a feature w bazie są rózne dla różnych pokoi#}
             <br>{{ feature.name }}
             {% endfor %}
+        </th>
+        <th>Cena za noc za osobę: {{ room.list.0.price }}</th>
+    </tr>
     {% endfor %}
+</table>

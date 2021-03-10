@@ -29,8 +29,10 @@ class Premises(models.Model):
 
 class Room(models.Model):
     people_number = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.FloatField(null=True, blank=True)
     premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
+    is_reserved = models.BooleanField(default=False)
 
 
 class Feature(models.Model):
