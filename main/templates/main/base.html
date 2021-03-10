@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<h2><a href="{% url 'landing-page' %}">STRONA GŁÓWNA</a></h2>
+{#<h2><a href="/index/?search={{ main.session.search }}">WYNIKI WYSZUKIWANIA</a></h2>#}
+<h3><a href="user_form.html">Zarejestruj się</a> <a href="login_form.html">Zaloguj się</a> </h3>
+<br>
+{% block content %}
+{% endblock %}
+<footer>author: Mateusz Tront</footer>
+</body>
+</html>

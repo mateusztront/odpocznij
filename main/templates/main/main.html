@@ -1,3 +1,5 @@
+{% extends 'main/base.html' %}
+{% block content %}
 
 {% for result in results %}
     {{ result.type }} <a href="{% url 'premises' result.id %}">{{ result.name }}</a>
@@ -6,3 +8,5 @@
     {{ result.city }}
     <br>{{ result.description }}
 {% endfor %}
+
+{% endblock %}
