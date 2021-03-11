@@ -32,7 +32,7 @@ class Room(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.FloatField(null=True, blank=True)
     premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
-    is_reserved = models.BooleanField(default=False)
+    is_reserved = models.BooleanField(default=False) #dodac model Reservations
 
 
 class Feature(models.Model):

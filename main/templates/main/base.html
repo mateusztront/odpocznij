@@ -7,7 +7,13 @@
 <body>
 <h2><a href="{% url 'landing-page' %}">STRONA GŁÓWNA</a></h2>
 {#<h2><a href="/index/?search={{ main.session.search }}">WYNIKI WYSZUKIWANIA</a></h2>#}
-<h3><a href="user_form.html">Zarejestruj się</a> <a href="login_form.html">Zaloguj się</a> </h3>
+<h3>
+{% if user.is_authenticated %}
+    Witaj {{ user.username }} <a href="{% url 'logout' %}">Wyloguj</a> <a href="{% url 'user' user.id %}">Konto</a>
+    {% else %}
+    <a href="{% url 'login' %}">Zaloguj się</a> <a href="{% url 'client-registration' %}">Zarejestruj się</a>
+{% endif %}
+</h3>
 <br>
 {% block content %}
 {% endblock %}

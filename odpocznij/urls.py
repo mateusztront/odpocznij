@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from main.views import LandingPageView, MainView, PremisesView, UserRegistrationView
+from main.views import LandingPageView, MainView, PremisesView, UserRegistrationView, LoginFormView, LogoutView, \
+    EditUserView, UserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name='landing-page'),
     path('index/', MainView.as_view(), name='main-page'),
     path('index/<int:id>/', PremisesView.as_view(), name='premises'),
-    path('index/user_form.html', UserRegistrationView.as_view(), name='user-registration'),
+    path('client_form/', UserRegistrationView.as_view(), name='client-registration'),
+    path('login/', LoginFormView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('user/<int:id>/', UserView.as_view(), name='user'),
+    path('user/<int:id>/edit_user/', EditUserView.as_view(), name='edit-user'),
 ]
