@@ -27,6 +27,6 @@ urlpatterns = [
     path('client_form/', UserRegistrationView.as_view(), name='client-registration'),
     path('login/', LoginFormView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('user/<int:id>/', UserView.as_view(), name='user'),
-    path('user/<int:id>/edit_user/', EditUserView.as_view(), name='edit-user'),
+    path('user/<int:pk>/', UserView.as_view(), name='user'),
+    path('user/<int:pk>/edit_user/', EditUserView.as_view(), name='edit-user'),
 ]

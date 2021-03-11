@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from main.forms import UserRegistrationForm, LoginForm
 from main.models import Premises
@@ -73,24 +73,28 @@ class LogoutView(View):
         return redirect(request.META['HTTP_REFERER'])
 
 
-class EditUserView(LoginRequiredMixin, View):
-    def get(self, request, id):
-        form = UserRegistrationForm() #jak usunę initial to jest ok, ale nie wyswietla wartosci w polach initial=request.user
-        return render(request, 'main/user_form.html', {'form': form})
+class EditUserView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = '__all__'
+    template_name = 'main/user_form.html'
 
-    def post(self, request, id):
-        form = UserRegistrationForm(data=request.POST)
-        if form.is_valid():
-            User.objects.update(
-                username=form.cleaned_data['username'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                password=form.cleaned_data['password'],
-                email=form.cleaned_data['email']
-            )
-            return redirect('user')
-        else:
-            return render(request, 'main/user_form.html', {'form': form})
+    # def get(self, request, id):
+    #     form = UserRegistrationForm() #jak usunę initial to jest ok, ale nie wyswietla wartosci w polach initial=request.user
+    #     return render(request, 'main/user_form.html', {'form': form})
+    #
+    # def post(self, request, id):
+    #     form = UserRegistrationForm(data=request.POST)
+    #     if form.is_valid():
+    #         User.objects.update(
+    #             username=form.cleaned_data['username'],
+    #             first_name=form.cleaned_data['first_name'],
+    #             last_name=form.cleaned_data['last_name'],
+    #             password=form.cleaned_data['password'],
+    #             email=form.cleaned_data['email']
+    #         )
+    #         return redirect('user')
+    #     else:
+    #         return render(request, 'main/user_form.html', {'form': form})
 
 
 

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django_countries.fields import CountryField
 
@@ -15,7 +16,7 @@ TYPES = [
 
 class Premises(models.Model):
     COUNTRIES_FIRST = ['PL']
-    name = models.CharField(max_length=256)
+    name = models.CharField("Nazwa", max_length=256)
     address = models.CharField("Adres", max_length=1024)
     zip_code = models.CharField("Kod pocztowy", max_length=12)
     city = models.CharField("Miejscowość", max_length=1024)
@@ -32,7 +33,7 @@ class Room(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.FloatField(null=True, blank=True)
     premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
-    is_reserved = models.BooleanField(default=False) #dodac model Reservations
+    is_reserved = models.BooleanField(default=False)
 
 
 class Feature(models.Model):
@@ -41,3 +42,24 @@ class Feature(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Reservation(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rooms = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+
+class Review(models.Model):
+    title = models.CharField(max_length=256)
+    content = models.TextField()
+    premises = models.OneToOneField(Premises, on_delete=models.CASCADE)
+    users = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
+    reservations = models.OneToOneField(Reservation, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+
+
+
+
+
