@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
-from main.forms import UserRegistrationForm, LoginForm
-from main.models import Premises
+from main.forms import UserRegistrationForm, LoginForm, NewReservationForm, UserForm
+from main.models import Premises, Reservation, Room
 
 
 class LandingPageView(View):
@@ -30,7 +31,36 @@ class PremisesView(View):
         return render(request, "main/premises_view.html", {"premises": premises, "room_types": room_types})
 
 
-class UserRegistrationView(View):
+class ReservationListView(ListView):
+    model = Reservation
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class NewReservationView(View):
+    def get(self, request, id):
+        room = Room.objects.get(pk=id)
+        form = NewReservationForm()
+        return render(request, 'main/reservation_form.html', {'form': form, 'room': room})
+
+    def post(self, request, id):
+        room = Room.objects.get(pk=id)
+        user = request.user
+        form = NewReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.rooms = room
+            reservation.user = user
+            reservation.save()
+            return redirect('reservation', user.id)
+        else:
+            return render(request, 'main/reservation_form.html', {'form': form})
+
+
+class ClientRegistrationView(View):
     def get(self, request):
         form = UserRegistrationForm()
         return render(request, 'main/user_form.html', {'form': form})
@@ -73,32 +103,28 @@ class LogoutView(View):
         return redirect(request.META['HTTP_REFERER'])
 
 
-class EditUserView(LoginRequiredMixin, UpdateView):
-    model = User
-    fields = '__all__'
-    template_name = 'main/user_form.html'
+class EditUserView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        user = User.objects.get(id=pk)
+        form = UserForm(instance=user)
+        return render(request, 'main/user_form.html', {'form': form})
 
-    # def get(self, request, id):
-    #     form = UserRegistrationForm() #jak usunę initial to jest ok, ale nie wyswietla wartosci w polach initial=request.user
-    #     return render(request, 'main/user_form.html', {'form': form})
-    #
-    # def post(self, request, id):
-    #     form = UserRegistrationForm(data=request.POST)
-    #     if form.is_valid():
-    #         User.objects.update(
-    #             username=form.cleaned_data['username'],
-    #             first_name=form.cleaned_data['first_name'],
-    #             last_name=form.cleaned_data['last_name'],
-    #             password=form.cleaned_data['password'],
-    #             email=form.cleaned_data['email']
-    #         )
-    #         return redirect('user')
-    #     else:
-    #         return render(request, 'main/user_form.html', {'form': form})
-
+    def post(self, request):
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            User.objects.update(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                password=form.cleaned_data['password'],
+                email=form.cleaned_data['email']
+            )
+            return redirect('user')
+        else:
+            return render(request, 'main/user_form.html', {'form': form})
 
 
 class UserView(View):
-    def get(self, request, id):
-        user = User.objects.get(id=id)
+    def get(self, request, pk):
+        user = User.objects.get(pk=pk)
         return render(request, 'main/user.html', {'user': user})

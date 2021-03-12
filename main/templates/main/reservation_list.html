@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <ul>
+    {% for reservation in reservation_list %}
+        <li>{{ reservation.start_date }} - {{ reservation.end_date }}
+        <br>{{ reservation.rooms.premises }}</li>
+        {% empty %}
+        <li>Brak rezerwacji</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

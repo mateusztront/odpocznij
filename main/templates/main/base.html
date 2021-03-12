@@ -9,7 +9,9 @@
 {#<h2><a href="/index/?search={{ main.session.search }}">WYNIKI WYSZUKIWANIA</a></h2>#}
 <h3>
 {% if user.is_authenticated %}
-    Witaj {{ user.username }} <a href="{% url 'logout' %}">Wyloguj</a> <a href="{% url 'user' user.id %}">Konto</a>
+    Witaj {{ user.username }}
+    <br><a href="{% url 'reservation' user.id %}">Twoje rezerwacje</a>
+    <a href="{% url 'logout' %}">Wyloguj</a> <a href="{% url 'user' user.id %}">Konto</a>
     {% else %}
     <a href="{% url 'login' %}">Zaloguj się</a> <a href="{% url 'client-registration' %}">Zarejestruj się</a>
 {% endif %}

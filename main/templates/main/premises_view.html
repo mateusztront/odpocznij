@@ -2,8 +2,8 @@
 {% block content %}
 
 
-{{ premises.name }}
-{{ premises.address }}
+<h3>{{ premises.name }}</h3>
+<br>{{ premises.address }}
 {{ premises.city }}
 {{ premises.type }}
 {{ premises.zip_code }}
@@ -19,6 +19,9 @@
             {% endfor %}
         </th>
         <th>Cena za noc za osobę: {{ room.list.0.price }}</th>
+    {% if user.is_authenticated %}
+        <th><a href="{% url 'new-reservation' room.list.0.id %}">Rezerwuj</a></th>
+    {% endif %}
     </tr>
     {% endfor %}
 </table>

@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import django.forms as forms
 
+from main.models import Reservation
+
 
 def username_unique(username):
     if User.objects.filter(username=username):
@@ -22,7 +24,24 @@ class UserRegistrationForm(forms.Form):
     #         raise ValidationError("Proszę wprowadzić dwa razy to samo hasło")
 
 
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password'] #zmienic dla Hasło
+
+
 class LoginForm(forms.Form):
     login = forms.CharField(label='login')
     password = forms.CharField(label='hasło', widget=forms.PasswordInput)
+
+
+class NewReservationForm(forms.ModelForm):
+    class Meta:
+        labels = {'start_date': 'Data początkowa', 'end_date': 'Data końcowa'}
+        model = Reservation
+        fields = ['start_date', 'end_date']
+        widgets = {'start_date': forms.SelectDateWidget, 'end_date': forms.SelectDateWidget} #można zaimplementować datepicker https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
+
+
+
 

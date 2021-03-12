@@ -16,15 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from main.views import LandingPageView, MainView, PremisesView, UserRegistrationView, LoginFormView, LogoutView, \
-    EditUserView, UserView
+from main.views import LandingPageView, MainView, PremisesView, LoginFormView, LogoutView, \
+    EditUserView, UserView, ReservationListView, NewReservationView, ClientRegistrationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name='landing-page'),
     path('index/', MainView.as_view(), name='main-page'),
     path('index/<int:id>/', PremisesView.as_view(), name='premises'),
-    path('client_form/', UserRegistrationView.as_view(), name='client-registration'),
+    path('user/<int:pk>/reservations/', ReservationListView.as_view(), name='reservation'),
+    path('index/<int:id>/new_reservation/', NewReservationView.as_view(), name='new-reservation'),
+    path('client_registration/', ClientRegistrationView.as_view(), name='client-registration'),
     path('login/', LoginFormView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('user/<int:pk>/', UserView.as_view(), name='user'),

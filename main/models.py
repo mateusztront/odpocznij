@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django_countries.fields import CountryField
 
 # Create your models here.
@@ -48,7 +49,10 @@ class Reservation(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rooms = models.ForeignKey(Room, on_delete=models.CASCADE)
+    rooms = models.ForeignKey(Room, on_delete=models.CASCADE) #zaminiec na room
+
+    def get_absolute_url(self):
+        return reverse('new-reservation', args=[self.id])
 
 
 class Review(models.Model):
@@ -58,8 +62,4 @@ class Review(models.Model):
     users = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
     reservations = models.OneToOneField(Reservation, on_delete=models.CASCADE)
     date = models.DateTimeField()
-
-
-
-
 
