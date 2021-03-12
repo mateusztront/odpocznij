@@ -10,7 +10,7 @@
 <h3>
 {% if user.is_authenticated %}
     Witaj {{ user.username }}
-    <br><a href="{% url 'reservation' user.id %}">Twoje rezerwacje</a>
+    <br><a href="{% url 'reservations' user.id %}">Twoje rezerwacje</a>
     <a href="{% url 'logout' %}">Wyloguj</a> <a href="{% url 'user' user.id %}">Konto</a>
     {% else %}
     <a href="{% url 'login' %}">Zaloguj się</a> <a href="{% url 'client-registration' %}">Zarejestruj się</a>

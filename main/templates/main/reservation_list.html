@@ -1,11 +1,19 @@
 {% extends 'main/base.html' %}
 {% block content %}
-    <ul>
+    <table>
+
     {% for reservation in reservation_list %}
-        <li>{{ reservation.start_date }} - {{ reservation.end_date }}
-        <br>{{ reservation.rooms.premises }}</li>
+        <tr>
+        <th>{{ reservation.rooms.premises }}
+            <br> {{ reservation.start_date }} - {{ reservation.end_date }}</th>
+        <th>
+            <a href="{% url 'edit-reservation' reservation.id %}"><button>Edytuj</button></a>
+            <a href="{% url 'delete-reservation' reservation.id %}"><button>Usuń</button></a>
+        </th>
+        </tr>
         {% empty %}
         <li>Brak rezerwacji</li>
     {% endfor %}
-    </ul>
+    </tr>
+    </table>
 {% endblock %}

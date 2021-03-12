@@ -17,15 +17,18 @@ from django.contrib import admin
 from django.urls import path
 
 from main.views import LandingPageView, MainView, PremisesView, LoginFormView, LogoutView, \
-    EditUserView, UserView, ReservationListView, NewReservationView, ClientRegistrationView
+    EditUserView, UserView, ReservationListView, NewReservationView, ClientRegistrationView, EditReservationView, \
+    DeleteReservationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name='landing-page'),
     path('index/', MainView.as_view(), name='main-page'),
     path('index/<int:id>/', PremisesView.as_view(), name='premises'),
-    path('user/<int:pk>/reservations/', ReservationListView.as_view(), name='reservation'),
+    path('user/<int:pk>/reservations/', ReservationListView.as_view(), name='reservations'),
     path('index/<int:id>/new_reservation/', NewReservationView.as_view(), name='new-reservation'),
+    path('index/<int:pk>/edit_reservation/', EditReservationView.as_view(), name='edit-reservation'),
+    path('index/<int:pk>/delete_reservation/', DeleteReservationView.as_view(), name='delete-reservation'),
     path('client_registration/', ClientRegistrationView.as_view(), name='client-registration'),
     path('login/', LoginFormView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

@@ -52,7 +52,7 @@ class Reservation(models.Model):
     rooms = models.ForeignKey(Room, on_delete=models.CASCADE) #zaminiec na room
 
     def get_absolute_url(self):
-        return reverse('new-reservation', args=[self.id])
+        return reverse('reservation', args=[self.id])
 
 
 class Review(models.Model):

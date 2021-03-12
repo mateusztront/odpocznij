@@ -3,9 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from main.forms import UserRegistrationForm, LoginForm, NewReservationForm, UserForm
 from main.models import Premises, Reservation, Room
@@ -55,9 +55,23 @@ class NewReservationView(View):
             reservation.rooms = room
             reservation.user = user
             reservation.save()
-            return redirect('reservation', user.id)
+            return redirect('reservations', user.id)
         else:
             return render(request, 'main/reservation_form.html', {'form': form})
+
+
+class EditReservationView(LoginRequiredMixin, UpdateView):
+    model = Reservation
+    fields = ['start_date', 'end_date']
+    template_name_suffix = '_update_form'
+
+
+class DeleteReservationView(LoginRequiredMixin, DeleteView):
+    model = Reservation
+
+    def get_success_url(self):
+        reservation_id = self.kwargs['pk']
+        return reverse_lazy('reservations', kwargs={'pk': reservation_id})
 
 
 class ClientRegistrationView(View):

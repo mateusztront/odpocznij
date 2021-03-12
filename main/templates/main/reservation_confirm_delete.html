@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    Ośrodek: {{ reservation.rooms.premises }}
+    <br>Liczba osób w pokoju: {{ reservation.rooms.people_number }}
+    <br>Cena za noc: {{ reservation.rooms.price }}
+    <br>
+    <input type="submit" value="Usuń">
+    <input type="button" value="Anuluj" onclick="window.history.go(-1);">
+</form>
+{% endblock %}

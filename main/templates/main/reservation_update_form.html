@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    Ośrodek: {{ reservation.rooms.premises }}
+    <br>Liczba osób w pokoju: {{ reservation.rooms.people_number }}
+    <br>Cena za noc: {{ reservation.rooms.price }}
+    {{ form.as_p }}
+    <input type="submit" value="Rezerwuj">
+</form>
+{% endblock %}
