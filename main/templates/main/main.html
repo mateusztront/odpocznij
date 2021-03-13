@@ -2,11 +2,13 @@
 {% block content %}
 
 {% for result in results %}
-    {{ result.type }} <a href="{% url 'premises' result.id %}">{{ result.name }}</a>
+    <div class="main_search_results">
+    <a href="{% url 'premises' result.id %}"> {{ result.get_type_display }} {{ result.name }}</a>
     <br>
     {{ result.address }}
     {{ result.city }}
-    <br>{{ result.description }}
+    <br>{{ result.description }}<br>
+    </div>
 {% endfor %}
 
 {% endblock %}

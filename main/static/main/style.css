@@ -1,0 +1,38 @@
+
+body {
+    background-color: hsl(48, 100%, 80%);
+    margin: 0;
+    padding: 30px;
+}
+
+.landingpage_logo {
+    margin: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.landingpage-searchbar {
+    margin: auto;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+tr {
+    background-color: hsl(90, 50%, 80%);
+    padding: 20px;
+}
+
+.main_search_results {
+    margin: 20px;
+}

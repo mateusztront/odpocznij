@@ -1,5 +1,10 @@
-
-<form action="{% url 'main-page' %}" method="get">
-    <input type="text" name="search">
-    <input type="submit" value="Szukaj">
-</form>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+<img class="landingpage_logo" src="{% static 'main/logo.png' %}" alt="Logo odpocznij.pl">
+<div class="landingpage-searchbar">
+    <form action="{% url 'main-page' %}" method="get">
+        Podaj miejscowość:
+        <input class="text-center" type="text" name="search">
+        <input type="submit" value="Szukaj">
+    </form>
+</div>

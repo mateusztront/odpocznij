@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% block content %}
-
+{% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
 
 <h3>{{ premises.name }}</h3>
 <br>{{ premises.address }}

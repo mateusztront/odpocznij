@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
 </head>
 <body>
 <h2><a href="{% url 'landing-page' %}">STRONA GŁÓWNA</a></h2>
