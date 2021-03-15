@@ -1,8 +1,20 @@
 
 body {
-    background-color: hsl(48, 100%, 80%);
-    margin: 0;
-    padding: 30px;
+    background-color: hsl(37, 100%, 97%);
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial ;
+}
+
+a {
+    color: black;
+}
+a:visited {
+    color: saddlebrown;
+}
+.landingpage {
+    background-image: url(background-landingpage.jpg);
+    background-repeat: no-repeat;
+    background-position: 20% 30%;
+    background-size: cover;
 }
 
 .landingpage_logo {
@@ -23,6 +35,36 @@ body {
     height: 150px;
 }
 
+
+.topnav {
+  overflow: hidden;
+  background-color: hsl(37, 100%, 12%);
+}
+
+.topnav a {
+  float: right;
+    order: revert;
+  color: hsl(37, 100%, 97%);
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.topnav .logo {
+    float: left;
+
+}
+
+.topnav a:hover {
+  background-color: hsl(37, 32%, 67%);
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
 .text-center {
     text-align: center;
 }
@@ -35,4 +77,40 @@ tr {
 
 .main_search_results {
     margin: 20px;
+    padding: 15px;
+    border: 1px solid saddlebrown;
+}
+
+.main_search_results a {
+    color: black;
+    font-weight: bold;
+}
+.main_search_results a:visited{
+    color: saddlebrown;
+    font-weight: bold;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+th {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    height: 60px;
+    width: 250px;
+}
+
+tr {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}
+td {
+    padding: 10px 0;
+    padding-right: 10px;
+    text-align: center;
 }

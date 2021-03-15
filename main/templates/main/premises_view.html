@@ -2,28 +2,30 @@
 {% block content %}
 {% load static %}
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
-
-<h3>{{ premises.name }}</h3>
+<div class="container">
+<h3>{{ premises.get_type_display }} {{ premises.name }}</h3>
 <br>{{ premises.address }}
 {{ premises.city }}
-{{ premises.type }}
-{{ premises.zip_code }}
 <br>{{ premises.description }}
-{% regroup room_types by people_number as room_types_unique %}
+</div>
+    <div class="container">
 <table>
-{% for room in room_types_unique %}
-    <tr><th>Liczba osób w pokoju: {{ room.grouper }}</th>
-        <th>
-    {% for feature in room.list.0.feature_set.all %}
+    {% regroup room_types by people_number as room_types_unique %}
+    <tr><th>Liczba osób w pokoju</th><th>Udogodnienia</th><th>Cena za osobę za noc</th><th>Rezerwuj</th></tr>
+    {% for room in room_types_unique %}
+        <tr><td>{{ room.grouper }}</td>
+            <td>
+        {% for feature in room.list.0.feature_set.all %}
 {#            biorę tylko pierwszy pokoj a feature w bazie są rózne dla różnych pokoi#}
             <br>{{ feature.name }}
             {% endfor %}
-        </th>
-        <th>Cena za noc za osobę: {{ room.list.0.price }}</th>
+        </td>
+        <td>Cena za noc za osobę: {{ room.list.0.price }}</td>
     {% if user.is_authenticated %}
-        <th><a href="{% url 'new-reservation' room.list.0.id %}">Rezerwuj</a></th>
+        <td><a href="{% url 'new-reservation' room.list.0.id %}">Rezerwuj</a></td>
     {% endif %}
     </tr>
     {% endfor %}
 </table>
+    </div>
 {% endblock %}

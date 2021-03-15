@@ -19,7 +19,7 @@ class LandingPageView(View):
 class MainView(View):
     def get(self, request):
         search = request.GET.get('search')
-        request.session['search'] = search
+        request.session['search'] = search #przekazywanie wyikow wyszukiwania w innych widokach
         results = Premises.objects.all().filter(city=search)
         return render(request, 'main/main.html', {'results': results})
 

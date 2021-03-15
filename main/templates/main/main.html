@@ -1,14 +1,17 @@
 {% extends 'main/base.html' %}
 {% block content %}
-
+    <h3>{{ results.0.city }}</h3>
+    <p>liczba ośrodków: {{ results.count }}
 {% for result in results %}
     <div class="main_search_results">
     <a href="{% url 'premises' result.id %}"> {{ result.get_type_display }} {{ result.name }}</a>
     <br>
     {{ result.address }}
     {{ result.city }}
-    <br>{{ result.description }}<br>
+    <br>{{ result.description }}
     </div>
+    {% empty %}
+    <p>Brak wyników do wyświetlenia
 {% endfor %}
 
 {% endblock %}
