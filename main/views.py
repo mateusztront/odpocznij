@@ -52,6 +52,16 @@ class NewReservationView(View):
         form = NewReservationForm(request.POST)
         if form.is_valid():
             reservation = form.save(commit=False)
+            start_date = reservation.start_date
+            end_date = reservation.end_date
+            case_1 = Reservation.objects.filter(rooms=room, start_date__lte=start_date, end_date__gte=end_date).exists()
+            case_2 = Reservation.objects.filter(rooms=room, start_date__lte=end_date, end_date__gte=end_date).exists()
+            case_3 = Reservation.objects.filter(rooms=room, start_date__gte=start_date, end_date__lte=end_date).exists()
+            if case_1 or case_2 or case_3:
+                return render(request, 'main/reservation_form.html',
+                              {'id': room.id, 'form': form, 'room': room,
+                               'error': 'Pokój jest zajęty w podanych dniach'})
+
             reservation.rooms = room
             reservation.user = user
             reservation.save()

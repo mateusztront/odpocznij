@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
 {% block content %}
+    <p class="error">{{ error }}</p>
+
 <form method="post">
     {% csrf_token %}
     Ośrodek: {{ room.premises }}

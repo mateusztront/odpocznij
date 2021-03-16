@@ -11,6 +11,9 @@ a {
 a:visited {
     color: saddlebrown;
 }
+.error {
+    color: chocolate;
+}
 
 .landingpage {
     background-image: url(background-landingpage.jpg);
