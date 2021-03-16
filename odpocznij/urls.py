@@ -18,7 +18,7 @@ from django.urls import path
 
 from main.views import LandingPageView, MainView, PremisesView, LoginFormView, LogoutView, \
     EditUserView, UserView, ReservationListView, NewReservationView, ClientRegistrationView, EditReservationView, \
-    DeleteReservationView
+    DeleteReservationView, CreateReviewView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +34,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('user/<int:pk>/', UserView.as_view(), name='user'),
     path('user/<int:pk>/edit_user/', EditUserView.as_view(), name='edit-user'),
+    path('index/<int:pk>/reservations/new_review/', CreateReviewView.as_view(), name='new-review')
 ]

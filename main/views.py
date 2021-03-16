@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from main.forms import UserRegistrationForm, LoginForm, NewReservationForm, UserForm
-from main.models import Premises, Reservation, Room
+from main.models import Premises, Reservation, Room, Review
 
 
 class LandingPageView(View):
@@ -19,7 +18,7 @@ class LandingPageView(View):
 class MainView(View):
     def get(self, request):
         search = request.GET.get('search')
-        request.session['search'] = search #przekazywanie wyikow wyszukiwania w innych widokach
+        request.session['search'] = search  # przekazywanie wyikow wyszukiwania w innych widokach
         results = Premises.objects.all().filter(city=search)
         return render(request, 'main/main.html', {'results': results})
 
@@ -31,16 +30,16 @@ class PremisesView(View):
         return render(request, "main/premises_view.html", {"premises": premises, "room_types": room_types})
 
 
-class ReservationListView(ListView):
+class ReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
-    paginate_by = 25
+    # paginate_by = 25
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
 
-class NewReservationView(View):
+class NewReservationView(LoginRequiredMixin, View):
     def get(self, request, id):
         room = Room.objects.get(pk=id)
         form = NewReservationForm()
@@ -152,3 +151,19 @@ class UserView(View):
     def get(self, request, pk):
         user = User.objects.get(pk=pk)
         return render(request, 'main/user.html', {'user': user})
+
+
+class CreateReviewView(CreateView):
+    model = Review
+    fields = ['title', 'score', 'content']
+
+    def form_valid(self, form):
+        reservation = Reservation.objects.get(pk=self.kwargs['pk'])
+        form.instance.users = self.request.user
+        form.instance.reservations = reservation
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        user_id = self.kwargs['pk']
+        return reverse_lazy('reservations', kwargs={'pk': user_id})
+

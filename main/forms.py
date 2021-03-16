@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import django.forms as forms
 
-from main.models import Reservation
+from main.models import Reservation, Review
 
 
 def username_unique(username):
@@ -43,5 +43,10 @@ class NewReservationForm(forms.ModelForm):
         widgets = {'start_date': forms.SelectDateWidget, 'end_date': forms.SelectDateWidget} #można zaimplementować datepicker https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
 
 
+class NewReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['title', 'score', 'content']
+        labels = {'title': 'Tytuł', 'score': 'Ocena', 'content': 'Treść'}
 
 

@@ -2,7 +2,7 @@
 {% block content %}
     {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
     <table>
 
     {% for reservation in reservation_list %}
@@ -12,6 +12,9 @@
         <th>
             <a href="{% url 'edit-reservation' reservation.id %}"><button>Edytuj</button></a>
             <a href="{% url 'delete-reservation' reservation.id %}"><button>Usuń</button></a>
+            {% if not reservation.review %}
+            <a href="{% url 'new-review' reservation.id %}"><button>Oceń</button></a>
+            {% endif %}
         </th>
         </tr>
         {% empty %}

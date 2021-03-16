@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django_countries.fields import CountryField
@@ -58,8 +59,8 @@ class Reservation(models.Model):
 class Review(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
-    premises = models.OneToOneField(Premises, on_delete=models.CASCADE)
+    score = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
     users = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
     reservations = models.OneToOneField(Reservation, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
 
