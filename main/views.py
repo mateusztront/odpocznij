@@ -33,7 +33,7 @@ class PremisesView(View):
 
 class ReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
-    # paginate_by = 25
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -148,13 +148,13 @@ class EditUserView(LoginRequiredMixin, View):
             return render(request, 'main/user_form.html', {'form': form})
 
 
-class UserView(View):
+class UserView(LoginRequiredMixin, View):
     def get(self, request, pk):
         user = User.objects.get(pk=pk)
         return render(request, 'main/user.html', {'user': user})
 
 
-class CreateReviewView(CreateView):
+class CreateReviewView(LoginRequiredMixin, CreateView):
     model = Review
     fields = ['title', 'score', 'content']
 
@@ -168,4 +168,3 @@ class CreateReviewView(CreateView):
     def get_success_url(self):
         user_id = self.kwargs['pk']
         return reverse_lazy('reservations', kwargs={'pk': user_id})
-
