@@ -81,7 +81,7 @@ footer {
     color: hsl(37, 100%, 97%);
     position: fixed;
     left: 10px;
-    bottom: 10px;
+    bottom: 0px;
     right: 10px;
     padding: 15px 20px;
     font-size: 12px;
@@ -149,4 +149,17 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.review {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid saddlebrown;
+    position: relative;
+}
+.review_content {
+    padding: 10px;
+}
+.review .date {
+    font-size: 12px;
 }

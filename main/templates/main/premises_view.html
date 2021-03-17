@@ -1,33 +1,51 @@
 {% extends 'main/base.html' %}
 {% block content %}
-{% load static %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
-<div class="container">
-<h3>{{ premises.get_type_display }} {{ premises.name }}</h3>
-<br>{{ premises.address }}
-{{ premises.city }}
-<br>{{ premises.description }}
-</div>
     <div class="container">
-<table>
-    {% regroup room_types by people_number as room_types_unique %}
-    <tr><th>Liczba osób w pokoju</th><th>Udogodnienia</th><th>Cena za osobę za noc</th><th>Rezerwuj</th></tr>
-    {% for room in room_types_unique %}
-        <tr><td>{{ room.grouper }}</td>
-            <td>
-        {% for feature in room.list.0.feature_set.all %}
-{#            biorę tylko pierwszy pokoj a feature w bazie są rózne dla różnych pokoi#}
-            <br>{{ feature.name }}
+        <h3>{{ premises.get_type_display }} {{ premises.name }}</h3>
+        <br>{{ premises.address }}
+        {{ premises.city }}
+        <br>{{ premises.description }}
+    </div>
+    <div class="container">
+        <table>
+            {% regroup room_types by people_number as room_types_unique %}
+            <tr>
+                <th>Liczba osób w pokoju</th>
+                <th>Udogodnienia</th>
+                <th>Cena za osobę za noc</th>
+                <th>Rezerwuj</th>
+            </tr>
+            {% for room in room_types_unique %}
+                <tr>
+                    <td>{{ room.grouper }}</td>
+                    <td>
+                        {% for feature in room.list.0.feature_set.all %}
+                            {#            biorę tylko pierwszy pokoj a feature w bazie są rózne dla różnych pokoi#}
+                            <br>{{ feature.name }}
+                        {% endfor %}
+                    </td>
+                    <td>Cena za noc za osobę: {{ room.list.0.price }}</td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{% url 'new-reservation' room.list.0.id %}">Rezerwuj</a></td>
+                    {% else %}
+                        <td>Zaloguj się, aby zarezerwować</td>
+                    {% endif %}
+                </tr>
             {% endfor %}
-        </td>
-        <td>Cena za noc za osobę: {{ room.list.0.price }}</td>
-    {% if user.is_authenticated %}
-        <td><a href="{% url 'new-reservation' room.list.0.id %}">Rezerwuj</a></td>
-        {% else %}
-        <td>Zaloguj się, aby zarezerwować</td>
-    {% endif %}
-    </tr>
-    {% endfor %}
-</table>
+        </table>
+    </div>
+    <br>
+    <div class="container">Opinie:
+        {% for review in premises.review_set.all %}
+            <div class="review">
+                <strong>Tytuł: {{ review.title }}</strong><br>
+                <div class="review_content">Treść: {{ review.content }}</div>
+                <br>
+                <div class="date">Data: {{ review.date }}</div>
+                <div class="rating">{{ review.score }}</div>
+            </div>
+          {% endfor %}
     </div>
 {% endblock %}
