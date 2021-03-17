@@ -74,10 +74,21 @@ a:visited {
   color: white;
 }
 
+footer {
+    background-color: hsl(37, 100%, 12%);
+    color: hsl(37, 100%, 97%);
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+    padding: 15px 20px;
+    font-size: 12px;
+    text-align: right;
+}
+
 .text-center {
     text-align: center;
 }
-
 
 tr {
     background-color: hsl(90, 50%, 80%);
@@ -122,4 +133,12 @@ td {
     padding: 10px 0;
     padding-right: 10px;
     text-align: center;
+}
+
+.rating {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    background-color: hsl(37, 100%, 12%);
+    color: hsl(37, 100%, 97%);
 }

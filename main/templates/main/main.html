@@ -6,12 +6,17 @@
     <div class="main_search_results">
     <a href="{% url 'premises' result.id %}"> {{ result.get_type_display }} {{ result.name }}</a>
     <br>
-    {{ result.address }}
-    {{ result.city }}
+        <div class="rating">
+            {% if result.avg_score %}
+            {{ result.avg_score }}
+            {% endif %}
+        </div>
+        {{ result.address }}
+        {{ result.city }}
     <br>{{ result.description }}
     </div>
     {% empty %}
-    <p>Brak wyników do wyświetlenia
+    <p>Brak wyników wyszukiwania
 {% endfor %}
 
 {% endblock %}

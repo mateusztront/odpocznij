@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -19,7 +20,7 @@ class MainView(View):
     def get(self, request):
         search = request.GET.get('search')
         request.session['search'] = search  # przekazywanie wyikow wyszukiwania w innych widokach
-        results = Premises.objects.all().filter(city=search)
+        results = Premises.objects.all().filter(city=search).annotate(avg_score=Avg('review__score'))
         return render(request, 'main/main.html', {'results': results})
 
 

@@ -25,9 +25,10 @@ class Premises(models.Model):
     country = CountryField()
     type = models.CharField(max_length=32, choices=TYPES)
     description = models.TextField()
-    #dodac model Reviews z relacją do premises
+
     def __str__(self):
         return self.name
+
 
 
 class Room(models.Model):
@@ -35,7 +36,7 @@ class Room(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.FloatField(null=True, blank=True)
     premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
-    is_reserved = models.BooleanField(default=False)
+
 
 
 class Feature(models.Model):
@@ -61,6 +62,7 @@ class Review(models.Model):
     content = models.TextField()
     score = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
     users = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
-    reservations = models.OneToOneField(Reservation, on_delete=models.CASCADE)
+    reservations = models.OneToOneField(Reservation, related_name='reviews', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    premise = models.ForeignKey(Premises, on_delete=models.CASCADE)
 
