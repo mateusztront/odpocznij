@@ -2,21 +2,20 @@
 {% block content %}
     <h3>{{ results.0.city }}</h3>
     <p>liczba ośrodków: {{ results.count }}
-{% for result in results %}
-    <div class="main_search_results">
-    <a href="{% url 'premises' result.id %}"> {{ result.get_type_display }} {{ result.name }}</a>
-    <br>
-        <div class="rating">
-            {% if result.avg_score %}
-            {{ result.avg_score }}
-            {% endif %}
-        </div>
-        {{ result.address }}
-        {{ result.city }}
-    <br>{{ result.description }}
-    </div>
-    {% empty %}
-    <p>Brak wyników wyszukiwania
-{% endfor %}
-
+        {% for result in results %}
+            <div class="main_search_results">
+                <a href="{% url 'premises' result.id %}"> {{ result.get_type_display }} {{ result.name }}</a>
+                <br>
+                {% if result.avg_score %}
+                    <div class="rating">
+                        {{ result.avg_score }}
+                    </div>
+                {% endif %}
+                {{ result.address }}
+                {{ result.city }}
+                <br>{{ result.description }}
+            </div>
+        {% empty %}
+            <p>Brak wyników wyszukiwania
+        {% endfor %}
 {% endblock %}

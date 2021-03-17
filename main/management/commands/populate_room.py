@@ -11,9 +11,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for premise in Premises.objects.all():
-            for _ in range(5, 50):
-                Room.objects.create(
-                    people_number=random.randint(1, 4),
-                    capacity=random.randint(5, 50),
-                    premises=premise
-                )
+            if not premise.rooms.first():
+                for _ in range(5, 50):
+                    Room.objects.create(
+                        people_number=random.randint(1, 4),
+                        capacity=random.randint(5, 50),
+                        premises=premise,
+                        price = random.randrange(50, 200, 50),
+                    )

@@ -1,3 +1,5 @@
+html, body { height: 100%;
+}
 
 body {
     background-color: hsl(37, 100%, 97%);
@@ -99,6 +101,7 @@ tr {
     margin: 20px;
     padding: 15px;
     border: 1px solid saddlebrown;
+    position: relative;
 }
 
 .main_search_results a {
@@ -136,9 +139,14 @@ td {
 }
 
 .rating {
-    position: fixed;
-    right: 10px;
+    position: absolute;
     top: 10px;
+    right: 10px;
     background-color: hsl(37, 100%, 12%);
     color: hsl(37, 100%, 97%);
+    height: 40px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

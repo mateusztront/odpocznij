@@ -162,6 +162,7 @@ class CreateReviewView(CreateView):
         reservation = Reservation.objects.get(pk=self.kwargs['pk'])
         form.instance.users = self.request.user
         form.instance.reservations = reservation
+        form.instance.premise = reservation.rooms.premises
         return super().form_valid(form)
 
     def get_success_url(self):
