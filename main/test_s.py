@@ -55,10 +55,10 @@ def test_new_reservation(new_user, new_premises, new_room):
     assert response.status_code == 200
     assert 'error' in response.context
 
-    # response = client.post(reverse('new-reservation', args=[new_room.id]), {'start_date': '2022-01-08',
-    #                                                                         'end_date': '2022-01-12'})
-    # assert response.status_code == 200
-    # assert 'error' in response.context
+    response = client.post(reverse('new-reservation', args=[new_room.id]), {'start_date': '2022-01-08',
+                                                                            'end_date': '2022-01-12'})
+    assert response.status_code == 200
+    assert 'error' in response.context
 
     response = client.post(reverse('new-reservation', args=[new_room.id]), {'start_date': '2022-01-05',
                                                                             'end_date': '2022-01-07'})
