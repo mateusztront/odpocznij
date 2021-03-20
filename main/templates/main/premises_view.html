@@ -37,6 +37,7 @@
         </table>
     </div>
     <br>
+    {% if premises.review_set.all %}
     <div class="container">Opinie:
         {% for review in premises.review_set.all %}
             <div class="review">
@@ -48,4 +49,5 @@
             </div>
           {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}
