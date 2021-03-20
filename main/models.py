@@ -30,13 +30,11 @@ class Premises(models.Model):
         return self.name
 
 
-
 class Room(models.Model):
     people_number = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.FloatField(null=True, blank=True)
     premises = models.ForeignKey(Premises, related_name='rooms', on_delete=models.CASCADE)
-
 
 
 class Feature(models.Model):
@@ -51,7 +49,7 @@ class Reservation(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rooms = models.ForeignKey(Room, on_delete=models.CASCADE) #zaminiec na room
+    rooms = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('reservation', args=[self.id])
@@ -62,7 +60,6 @@ class Review(models.Model):
     content = models.TextField()
     score = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
     user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
-    reservation = models.OneToOneField(Reservation, related_name='reviews', on_delete=models.CASCADE)
+    reservation = models.OneToOneField(Reservation, related_name='review', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     premise = models.ForeignKey(Premises, on_delete=models.CASCADE)
-

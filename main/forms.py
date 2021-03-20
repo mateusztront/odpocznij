@@ -17,11 +17,11 @@ class UserRegistrationForm(forms.Form):
     first_name = forms.CharField(label='imię')
     last_name = forms.CharField(label='nazwisko')
     email = forms.EmailField(label='email')
-    #zapytać Sławka
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     if cleaned_data['password'] != cleaned_data['second_password']:
-    #         raise ValidationError("Proszę wprowadzić dwa razy to samo hasło")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['password'] != cleaned_data['second_password']:
+            raise ValidationError("Proszę wprowadzić dwa razy to samo hasło")
 
 
 class UserForm(forms.ModelForm):

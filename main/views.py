@@ -19,7 +19,7 @@ class LandingPageView(View):
 class MainView(View):
     def get(self, request):
         search = request.GET.get('search')
-        request.session['search'] = search  # przekazywanie wyikow wyszukiwania w innych widokach
+        request.session['search'] = search
         results = Premises.objects.all().filter(city=search).annotate(avg_score=Avg('review__score'))
         return render(request, 'main/main.html', {'results': results})
 
@@ -33,7 +33,10 @@ class PremisesView(View):
 
 class ReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
-    paginate_by = 10
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

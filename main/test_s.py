@@ -148,7 +148,7 @@ def test_userview(client, new_user):
 @pytest.mark.django_db
 def test_createreview(client, new_user, new_reservation):
     client.login(username='qwe', password='qwe')
-    response = client.get(reverse('user', args=[new_reservation.id]))
+    response = client.get(reverse('new-review', args=[new_reservation.id]))
     assert response.status_code == 200
     assert Review.objects.count() == 0
     response = client.post(reverse('new-review', args=[new_reservation.id]),

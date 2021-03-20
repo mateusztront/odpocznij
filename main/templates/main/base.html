@@ -9,7 +9,6 @@
 <body>
 <div class="topnav">
     <a class="logo" href="{% url 'landing-page' %}">odpocznij.pl</a>
-    {#<h2><a href="/index/?search={{ main.session.search }}">WYNIKI WYSZUKIWANIA</a></h2>#}
     {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">Wyloguj</a>
         <a href="{% url 'reservations' user.id %}">Twoje rezerwacje</a>
@@ -21,6 +20,5 @@
 <br>
 {% block content %}
 {% endblock %}
-<footer>autor: Mateusz Tront</footer>
 </body>
 </html>
