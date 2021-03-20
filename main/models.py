@@ -61,8 +61,8 @@ class Review(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
     score = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
-    users = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
-    reservations = models.OneToOneField(Reservation, related_name='reviews', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
+    reservation = models.OneToOneField(Reservation, related_name='reviews', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     premise = models.ForeignKey(Premises, on_delete=models.CASCADE)
 

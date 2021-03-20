@@ -27,7 +27,7 @@ class UserRegistrationForm(forms.Form):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password'] #zmienic dla Hasło
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 
 class LoginForm(forms.Form):

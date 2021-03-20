@@ -80,8 +80,8 @@ class DeleteReservationView(LoginRequiredMixin, DeleteView):
     model = Reservation
 
     def get_success_url(self):
-        reservation_id = self.kwargs['pk']
-        return reverse_lazy('reservations', kwargs={'pk': reservation_id})
+        pk = self.kwargs['pk']
+        return reverse_lazy('reservations', kwargs={'pk': pk})
 
 
 class ClientRegistrationView(View):
@@ -133,17 +133,17 @@ class EditUserView(LoginRequiredMixin, View):
         form = UserForm(instance=user)
         return render(request, 'main/user_form.html', {'form': form})
 
-    def post(self, request):
-        form = UserRegistrationForm(data=request.POST)
+    def post(self, request, pk):
+        form = UserForm(data=request.POST, instance=request.user)
         if form.is_valid():
-            User.objects.update(
+            User.objects.filter(pk=pk).update(
                 username=form.cleaned_data['username'],
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
-                password=form.cleaned_data['password'],
                 email=form.cleaned_data['email']
             )
-            return redirect('user')
+            user = User.objects.get(pk=pk)
+            return redirect('user', user.id)
         else:
             return render(request, 'main/user_form.html', {'form': form})
 
@@ -160,8 +160,8 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         reservation = Reservation.objects.get(pk=self.kwargs['pk'])
-        form.instance.users = self.request.user
-        form.instance.reservations = reservation
+        form.instance.user = self.request.user
+        form.instance.reservation = reservation
         form.instance.premise = reservation.rooms.premises
         return super().form_valid(form)
 

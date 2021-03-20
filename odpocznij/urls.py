@@ -29,10 +29,10 @@ urlpatterns = [
     path('index/<int:id>/new_reservation/', NewReservationView.as_view(), name='new-reservation'),
     path('index/<int:pk>/edit_reservation/', EditReservationView.as_view(), name='edit-reservation'),
     path('index/<int:pk>/delete_reservation/', DeleteReservationView.as_view(), name='delete-reservation'),
+    path('index/<int:pk>/reservations/new_review/', CreateReviewView.as_view(), name='new-review'),
     path('client_registration/', ClientRegistrationView.as_view(), name='client-registration'),
     path('login/', LoginFormView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('user/<int:pk>/', UserView.as_view(), name='user'),
     path('user/<int:pk>/edit_user/', EditUserView.as_view(), name='edit-user'),
-    path('index/<int:pk>/reservations/new_review/', CreateReviewView.as_view(), name='new-review')
 ]

@@ -2,24 +2,30 @@
 {% block content %}
     {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
     <table>
 
-    {% for reservation in reservation_list %}
-        <tr>
-        <td>{{ reservation.rooms.premises }}
-            <br> {{ reservation.start_date }} - {{ reservation.end_date }}</td>
-        <td>
-            <a href="{% url 'edit-reservation' reservation.id %}"><button>Edytuj</button></a>
-            <a href="{% url 'delete-reservation' reservation.id %}"><button>Usuń</button></a>
-            {% if not reservation.review %}
-            <a href="{% url 'new-review' reservation.id %}"><button>Oceń</button></a>
-            {% endif %}
-        </td>
-        </tr>
+        {% for reservation in reservation_list %}
+            <tr>
+                <td>{{ reservation.rooms.premises }}
+                    <br> {{ reservation.start_date }} - {{ reservation.end_date }}</td>
+                <td>
+                    <a href="{% url 'edit-reservation' reservation.id %}">
+                        <button>Edytuj</button>
+                    </a>
+                    <a href="{% url 'delete-reservation' reservation.id %}">
+                        <button>Usuń</button>
+                    </a>
+                    {% if not reservation.review %}
+                        <a href="{% url 'new-review' reservation.id %}">
+                            <button>Oceń</button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
         {% empty %}
-        <li>Brak rezerwacji</li>
-    {% endfor %}
-    </tr>
+            <li>Brak rezerwacji</li>
+        {% endfor %}
+        </tr>
     </table>
 {% endblock %}

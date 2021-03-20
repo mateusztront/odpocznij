@@ -1,8 +1,14 @@
 import pytest
 from django.contrib.auth.models import User
+from django.test import Client
 
-from main.models import Premises, Room, Reservation
+from main.models import Premises, Room, Reservation, Review
 
+
+@pytest.fixture
+def client():
+    client = Client()
+    return client
 
 @pytest.fixture
 def new_premises():
@@ -37,3 +43,22 @@ def new_reservation(new_user, new_room):
                                                  rooms_id=new_room.id,
                                                  user=new_user)
     return new_reservation
+
+
+@pytest.fixture
+def new_reservation2(new_user, new_room):
+    new_reservation2 = Reservation.objects.create(start_date='2021-01-20',
+                                                 end_date='2021-01-23',
+                                                 rooms_id=new_room.id,
+                                                 user=new_user)
+    return new_reservation2
+
+@pytest.fixture
+def new_review(new_user, new_room, new_reservation):
+    new_review = Review.objects.create(title='title',
+                                       content='content',
+                                       score='7',
+                                       user=new_user,
+                                       reservation=new_reservation,
+                                       premise=new_reservation.rooms.premises)
+    return new_review

@@ -5,6 +5,7 @@
     Ośrodek: {{ reservation.rooms.premises }}
     <br>Liczba osób w pokoju: {{ reservation.rooms.people_number }}
     <br>Cena za noc: {{ reservation.rooms.price }}
+    <br>Daty: {{ reservation.start_date }} - {{ reservation.end_date }}
     <br>
     <input type="submit" value="Usuń">
     <input type="button" value="Anuluj" onclick="window.history.go(-1);">

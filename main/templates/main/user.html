@@ -1,8 +1,8 @@
 {% extends 'main/base.html' %}
 {% block content %}
-    <a href="{% url 'edit-user' user.id %}">Edytuj</a>
     <br>Login: {{ user.username }}
     <br>Imię: {{ user.first_name }}
     <br>Nazwisko: {{ user.last_name }}
     <br>Email: {{ user.email }}
+    <br><a href="{% url 'edit-user' user.id %}">Edytuj</a>
 {% endblock %}
