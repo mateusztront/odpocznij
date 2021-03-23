@@ -78,6 +78,10 @@ class EditReservationView(LoginRequiredMixin, UpdateView):
     fields = ['start_date', 'end_date']
     template_name_suffix = '_update_form'
 
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('reservations', kwargs={'pk': pk})
+
 
 class DeleteReservationView(LoginRequiredMixin, DeleteView):
     model = Reservation
